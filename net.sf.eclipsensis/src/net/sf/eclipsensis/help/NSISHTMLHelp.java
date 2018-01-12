@@ -1818,17 +1818,18 @@ public class NSISHTMLHelp extends ViewPart implements INSISConstants
             return size;
         }
 
-        public Filter getFilter()
-        {
-            if (mSearchPrevious && mQuery != null)
-            {
-                return new QueryWrapperFilter(mQuery);
-            }
-            else
-            {
-                return null;
-            }
-        }
+        // TODO Lucene/Solr
+//        public Filter getFilter()
+//        {
+//            if (mSearchPrevious && mQuery != null)
+//            {
+//                return new QueryWrapperFilter(mQuery);
+//            }
+//            else
+//            {
+//                return null;
+//            }
+//        }
 
         public void setUseStemming(boolean useStemming)
         {

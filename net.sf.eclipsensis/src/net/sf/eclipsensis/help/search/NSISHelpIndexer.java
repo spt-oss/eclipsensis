@@ -20,7 +20,8 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.demo.html.HTMLParser;
 import org.apache.lucene.document.*;
 import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriter.MaxFieldLength;
+//TODO Lucene/Solr
+//import org.apache.lucene.index.IndexWriter.MaxFieldLength;
 import org.apache.lucene.store.SimpleFSDirectory;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.ISchedulingRule;
@@ -88,40 +89,41 @@ public class NSISHelpIndexer implements INSISHelpSearchConstants
         {
             IndexWriter writer = null;
             IStatus status = Status.OK_STATUS;
-            try {
-                monitor.beginTask(EclipseNSISPlugin.getResourceString("nsis.help.indexer.task.title"),IProgressMonitor.UNKNOWN); //$NON-NLS-1$
-                if(mIndexLocation.exists()) {
-                    mIndexLocation.mkdirs();
-                }
-				writer = new IndexWriter(new SimpleFSDirectory(mIndexLocation),
-						mAnalyzer, true, MaxFieldLength.LIMITED);
-                writer.setMaxFieldLength(1000000);
-
-                status = indexDocs(monitor, writer, mDocumentRoot);
-                if(status.isOK()) {
-                    writer.optimize();
-                }
-            }
-            catch(Exception ex) {
-                EclipseNSISPlugin.getDefault().log(ex);
-                status = new Status(IStatus.ERROR, INSISConstants.PLUGIN_ID, IStatus.ERROR, ex.getMessage(), ex);
-                IOUtility.deleteDirectory(mIndexLocation);
-            }
-            finally {
-                if(writer != null) {
-                    try {
-                        writer.close();
-                    }
-                    catch (IOException e) {
-                        EclipseNSISPlugin.getDefault().log(e);
-                    }
-                }
-                monitor.done();
-                if(monitor.isCanceled()) {
-                    status = Status.CANCEL_STATUS;
-                    IOUtility.deleteDirectory(mIndexLocation);
-                }
-            }
+            // TODO Lucene/Solr
+//            try {
+//                monitor.beginTask(EclipseNSISPlugin.getResourceString("nsis.help.indexer.task.title"),IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+//                if(mIndexLocation.exists()) {
+//                    mIndexLocation.mkdirs();
+//                }
+//				writer = new IndexWriter(new SimpleFSDirectory(mIndexLocation),
+//						mAnalyzer, true, MaxFieldLength.LIMITED);
+//                writer.setMaxFieldLength(1000000);
+//
+//                status = indexDocs(monitor, writer, mDocumentRoot);
+//                if(status.isOK()) {
+//                    writer.optimize();
+//                }
+//            }
+//            catch(Exception ex) {
+//                EclipseNSISPlugin.getDefault().log(ex);
+//                status = new Status(IStatus.ERROR, INSISConstants.PLUGIN_ID, IStatus.ERROR, ex.getMessage(), ex);
+//                IOUtility.deleteDirectory(mIndexLocation);
+//            }
+//            finally {
+//                if(writer != null) {
+//                    try {
+//                        writer.close();
+//                    }
+//                    catch (IOException e) {
+//                        EclipseNSISPlugin.getDefault().log(e);
+//                    }
+//                }
+//                monitor.done();
+//                if(monitor.isCanceled()) {
+//                    status = Status.CANCEL_STATUS;
+//                    IOUtility.deleteDirectory(mIndexLocation);
+//                }
+//            }
             return status;
         }
 
@@ -159,15 +161,17 @@ public class NSISHelpIndexer implements INSISHelpSearchConstants
         {
             Document doc = new Document();
 
-            doc.add(new Field(INDEX_FIELD_URL, IOUtility.getFileURLString(f), Field.Store.YES, Field.Index.NO));
+            // TODO Lucene/Solr
+//            doc.add(new Field(INDEX_FIELD_URL, IOUtility.getFileURLString(f), Field.Store.YES, Field.Index.NO));
 
             HTMLParser parser = new HTMLParser(new FileInputStream(f));
             parser.parse();
 
-            doc.add(new Field(INDEX_FIELD_CONTENTS, parser.getReader(), Field.TermVector.NO));
-            doc.add(new Field(INDEX_FIELD_SUMMARY, parser.getSummary(), Field.Store.YES, Field.Index.NO));
-			doc.add(new Field(INDEX_FIELD_TITLE, parser.getTitle(),
-					Field.Store.YES, Field.Index.ANALYZED));
+            // TODO Lucene/Solr
+//            doc.add(new Field(INDEX_FIELD_CONTENTS, parser.getReader(), Field.TermVector.NO));
+//            doc.add(new Field(INDEX_FIELD_SUMMARY, parser.getSummary(), Field.Store.YES, Field.Index.NO));
+//			doc.add(new Field(INDEX_FIELD_TITLE, parser.getTitle(),
+//					Field.Store.YES, Field.Index.ANALYZED));
 
             return doc;
         }

@@ -16,7 +16,8 @@ import org.apache.lucene.search.*;
 public interface INSISHelpSearchRequester
 {
     public String getSearchText();
-    public Filter getFilter();
+    // TODO Lucene/Solr
+    // public Filter getFilter();
     public void queryParsed(Query query);
     public void searchCompleted(NSISHelpSearchResult[] results, Collection<String> highlightTerms);
     public boolean isCanceled();

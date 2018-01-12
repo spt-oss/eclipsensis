@@ -26,4 +26,14 @@ This project is a fork of [henrikor2/eclipsensis](https://github.com/henrikor2/e
 * Oracle branded Java 8
 * Eclipse Neon 4.6
 
-Latest version: [0.9.10](https://github.com/spt-oss/eclipsensis/blob/master/dist/eclipsensis-0.9.10.zip)
+Latest version: [0.9.10](https://github.com/spt-oss/eclipsensis/raw/master/dist/eclipsensis-0.9.10.zip)
+
+## Forked and Fixed (0.9.11)
+
+This project is a fork of [henrikor2/eclipsensis](https://github.com/henrikor2/eclipsensis) and fixed for:
+
+* Windows 10
+* Oracle branded Java 8
+* Eclipse Oxygen 4.7.2
+
+Latest version: [0.9.11](https://github.com/spt-oss/eclipsensis/raw/master/dist/eclipsensis-0.9.11.zip)

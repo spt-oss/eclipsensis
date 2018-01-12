@@ -18,7 +18,8 @@ import net.sf.eclipsensis.job.IJobStatusRunnable;
 import net.sf.eclipsensis.util.*;
 
 import org.apache.lucene.document.Document;
-import org.apache.lucene.queryParser.QueryParser;
+// TODO Lucene/Solr
+//import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.SimpleFSDirectory;
 import org.eclipse.core.runtime.*;
@@ -81,72 +82,73 @@ public class NSISHelpSearcher implements INSISHelpSearchConstants
                     return Status.CANCEL_STATUS;
                 }
                 Query query = null;
-                try {
-                    mSearcher = new IndexSearcher(new SimpleFSDirectory(mIndexer.getIndexLocation()));
-                    if(checkCanceled(monitor)) {
-                        return Status.CANCEL_STATUS;
-                    }
-					QueryParser parser = new QueryParser(
-							org.apache.lucene.util.Version.LUCENE_35,
-							mField == null ? INDEX_FIELD_CONTENTS : mField,
-							mIndexer.getAnalyzer());
-                    query = parser.parse(mRequester.getSearchText());
-                    if(checkCanceled(monitor)) {
-                        return Status.CANCEL_STATUS;
-                    }
-                    Filter filter = mRequester.getFilter();
-                    Collector collector = TopScoreDocCollector.create(10, true);
-                    mHits = new ArrayList<HitDoc>();
-                    if(filter != null) {
-                        mSearcher.search(query, filter, collector);
-                    }
-                    else {
-                        mSearcher.search(query, collector);
-                    }
-                }
-                catch (Exception e) {
-                    if(monitor.isCanceled()) {
-                        return Status.CANCEL_STATUS;
-                    }
-                    EclipseNSISPlugin.getDefault().log(e);
-                    return new Status(IStatus.ERROR,INSISConstants.PLUGIN_ID, IStatus.ERROR, e.getMessage(), e);
-                }
-                finally {
-                    if(!monitor.isCanceled() && !Common.isEmptyCollection(mHits)) {
-                        Collections.sort(mHits);
-                        int n = mHits.size();
-                        results = new ArrayList<NSISHelpSearchResult>(n);
-                        int rank = 1;
-                        for(int i=0; i<n; i++) {
-                            try {
-                                Document doc = mSearcher.doc(mHits.get(i).id);
-                                results.add(new NSISHelpSearchResult(doc.get(INDEX_FIELD_TITLE),doc.get(INDEX_FIELD_URL),rank++));
-                            }
-                            catch (IOException e) {
-                                EclipseNSISPlugin.getDefault().log(e);
-                            }
-                        }
-                    }
-                    if(mSearcher != null) {
-                        try {
-                            mSearcher.close();
-                        }
-                        catch (IOException e) {
-                            EclipseNSISPlugin.getDefault().log(e);
-                        }
-                        mSearcher = null;
-                    }
-                    if(mHits != null) {
-                        mRequester.queryParsed(query);
-                        try {
-                            highlightTerms = NSISHelpSearchQueryParser.parse(mField, mIndexer.getAnalyzer(), mRequester.getSearchText());
-                        }
-                        catch (ParseException e) {
-                            EclipseNSISPlugin.getDefault().log(e);
-                            highlightTerms = Collections.emptySet();
-                        }
-                    }
-                }
+                // TODO Lucene/Solr
+//                try {
+//                    mSearcher = new IndexSearcher(new SimpleFSDirectory(mIndexer.getIndexLocation()));
+//                    if(checkCanceled(monitor)) {
+//                        return Status.CANCEL_STATUS;
+//                    }
+//					QueryParser parser = new QueryParser(
+//							org.apache.lucene.util.Version.LUCENE_35,
+//							mField == null ? INDEX_FIELD_CONTENTS : mField,
+//							mIndexer.getAnalyzer());
+//                    query = parser.parse(mRequester.getSearchText());
+//                    if(checkCanceled(monitor)) {
+//                        return Status.CANCEL_STATUS;
+//                    }
+//                    Filter filter = mRequester.getFilter();
+//                    Collector collector = TopScoreDocCollector.create(10, true);
+//                    mHits = new ArrayList<HitDoc>();
+//                    if(filter != null) {
+//                        mSearcher.search(query, filter, collector);
+//                    }
+//                    else {
+//                        mSearcher.search(query, collector);
+//                    }
+//                }
+//                catch (Exception e) {
+//                    if(monitor.isCanceled()) {
+//                        return Status.CANCEL_STATUS;
+//                    }
+//                    EclipseNSISPlugin.getDefault().log(e);
+//                    return new Status(IStatus.ERROR,INSISConstants.PLUGIN_ID, IStatus.ERROR, e.getMessage(), e);
+//                }
+//                finally {
+//                    if(!monitor.isCanceled() && !Common.isEmptyCollection(mHits)) {
+//                        Collections.sort(mHits);
+//                        int n = mHits.size();
+//                        results = new ArrayList<NSISHelpSearchResult>(n);
+//                        int rank = 1;
+//                        for(int i=0; i<n; i++) {
+//                            try {
+//                                Document doc = mSearcher.doc(mHits.get(i).id);
+//                                results.add(new NSISHelpSearchResult(doc.get(INDEX_FIELD_TITLE),doc.get(INDEX_FIELD_URL),rank++));
+//                            }
+//                            catch (IOException e) {
+//                                EclipseNSISPlugin.getDefault().log(e);
+//                            }
+//                        }
+//                    }
+//                    if(mSearcher != null) {
+//                        try {
+//                            mSearcher.close();
+//                        }
+//                        catch (IOException e) {
+//                            EclipseNSISPlugin.getDefault().log(e);
+//                        }
+//                        mSearcher = null;
+//                    }
+//                    if(mHits != null) {
+//                        mRequester.queryParsed(query);
+//                        try {
+//                            highlightTerms = NSISHelpSearchQueryParser.parse(mField, mIndexer.getAnalyzer(), mRequester.getSearchText());
+//                        }
+//                        catch (ParseException e) {
+//                            EclipseNSISPlugin.getDefault().log(e);
+//                            highlightTerms = Collections.emptySet();
+//                        }
+//                    }
+//                }
                 return Status.OK_STATUS;
             }
             finally {
